@@ -21,7 +21,7 @@ namespace sample_utils
     inline double calculateSampleInterval(OfflineTimestamp timestamp, size_t sampleCount, OfflineTimestamp next)
     {
         OfflineTimestamp diff = next - timestamp;
-        double msPerSample = diff / sampleCount;
+        double msPerSample = diff / (double) sampleCount;
         return msPerSample;
     }
 
