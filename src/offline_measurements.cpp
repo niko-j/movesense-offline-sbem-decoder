@@ -133,7 +133,7 @@ bool OfflineECGData::readFrom(const std::vector<char>& data, size_t offset)
 
 bool OfflineECGCompressedData::readFrom(const std::vector<char>& data, size_t offset)
 {
-    constexpr size_t BlockSize = 48;
+    constexpr size_t BlockSize = 32;
     int payload = data.size() - sizeof(timestamp);
     if (payload != BlockSize)
         return false;
