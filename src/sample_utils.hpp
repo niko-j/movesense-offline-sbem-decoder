@@ -16,7 +16,8 @@ namespace sample_utils
     void printECGSamples(const Samples& samples);
     void printTempSamples(const Samples& samples);
     void printActivitySamples(const Samples& samples);
-    void printTapDetectionSamples(const Samples& samples);
+    void printTapGestureSamples(const Samples& samples);
+    void printShakeGestureSamples(const Samples& samples);
 
     inline double calculateSampleInterval(OfflineTimestamp timestamp, size_t sampleCount, OfflineTimestamp next)
     {

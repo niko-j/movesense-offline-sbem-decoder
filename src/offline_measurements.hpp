@@ -8,6 +8,7 @@
 //! ==============================================
 
 typedef uint32 OfflineTimestamp;
+typedef uint32 GestureTimestamp;
 
 template<typename T, uint8_t Q>
 float fixed_point_to_float(T value)
@@ -156,10 +157,18 @@ struct WB_ALIGN(4) OfflineActivityData : ISbemSerialized
 	virtual bool readFrom(const std::vector<char>&data, size_t offset);
 };
 
-struct WB_ALIGN(4) OfflineTapData : ISbemSerialized
+struct WB_ALIGN(4) TapGestureData : ISbemSerialized
 {
-	WB_ALIGN(4) OfflineTimestamp timestamp;
+	WB_ALIGN(4) GestureTimestamp timestamp;
 	WB_ALIGN(1) uint8 count;
+
+	virtual bool readFrom(const std::vector<char>&data, size_t offset);
+};
+
+struct WB_ALIGN(4) ShakeGestureData : ISbemSerialized
+{
+	WB_ALIGN(4) GestureTimestamp timestamp;
+	WB_ALIGN(1) uint32 duration;
 
 	virtual bool readFrom(const std::vector<char>&data, size_t offset);
 };

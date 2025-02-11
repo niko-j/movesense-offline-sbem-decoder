@@ -12,7 +12,9 @@ struct Samples
     std::vector<OfflineECGData> ecg;
     std::vector<OfflineTempData> temp;
     std::vector<OfflineActivityData> activity;
-    std::vector<OfflineTapData> taps;
+
+    std::vector<TapGestureData> tapGestures;
+    std::vector<ShakeGestureData> shakeGestures;
     
     Samples(const SbemDocument& sbem);
 };

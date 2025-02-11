@@ -162,11 +162,19 @@ bool OfflineActivityData::readFrom(const std::vector<char>& data, size_t offset)
         );
 }
 
-bool OfflineTapData::readFrom(const std::vector<char>& data, size_t offset)
+bool TapGestureData::readFrom(const std::vector<char>& data, size_t offset)
 {
     return (
         readValue<uint8>(data, offset + 0, count) &&
-        readValue<OfflineTimestamp>(data, offset + sizeof(count), timestamp)
+        readValue<GestureTimestamp>(data, offset + sizeof(count), timestamp)
+        );
+}
+
+bool ShakeGestureData::readFrom(const std::vector<char>& data, size_t offset)
+{
+    return (
+        readValue<uint32>(data, offset + 0, duration) &&
+        readValue<GestureTimestamp>(data, offset + sizeof(duration), timestamp)
         );
 }
 

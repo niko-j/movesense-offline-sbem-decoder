@@ -78,11 +78,17 @@ Samples::Samples(const SbemDocument& sbem)
             if (chunk.tryRead(data))
                 activity.push_back(data);
         }
-        else if (measurement.find("OfflineMeasTap.") != std::string::npos)
+        else if (measurement.find("GestureTap.") != std::string::npos)
         {
-            OfflineTapData data;
+            TapGestureData data;
             if (chunk.tryRead(data))
-                taps.push_back(data);
+                tapGestures.push_back(data);
+        }
+        else if (measurement.find("GestureShake.") != std::string::npos)
+        {
+            ShakeGestureData data;
+            if (chunk.tryRead(data))
+                shakeGestures.push_back(data);
         }
         else
         {

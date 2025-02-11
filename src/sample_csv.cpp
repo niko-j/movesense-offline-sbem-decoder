@@ -222,18 +222,35 @@ std::ostream& sample_csv::writeActivitySamplesCSV(const Samples& samples, std::o
     return out;
 }
 
-std::ostream& sample_csv::writeTapDetectionSamplesCSV(const Samples& samples, std::ostream& out)
+std::ostream& sample_csv::writeTapGestureSamplesCSV(const Samples& samples, std::ostream& out)
 {
     // Title row
     out << "Timestamp" << CSV_DELIMITER
         << "Count" << std::endl;
 
     // Data rows
-    for (size_t i = 0; i < samples.taps.size(); i++)
+    for (size_t i = 0; i < samples.tapGestures.size(); i++)
     {
         out
-            << samples.taps[i].timestamp << CSV_DELIMITER
-            << (int)samples.taps[i].count << std::endl;
+            << samples.tapGestures[i].timestamp << CSV_DELIMITER
+            << (int)samples.tapGestures[i].count << std::endl;
+    }
+
+    return out;
+}
+
+std::ostream& sample_csv::writeShakeGestureSamplesCSV(const Samples& samples, std::ostream& out)
+{
+    // Title row
+    out << "Timestamp" << CSV_DELIMITER
+        << "Duration" << std::endl;
+
+    // Data rows
+    for (size_t i = 0; i < samples.shakeGestures.size(); i++)
+    {
+        out
+            << samples.shakeGestures[i].timestamp << CSV_DELIMITER
+            << (int)samples.shakeGestures[i].duration << std::endl;
     }
 
     return out;

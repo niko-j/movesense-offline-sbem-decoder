@@ -123,16 +123,28 @@ void sample_utils::printActivitySamples(const Samples& samples)
     std::cout << "}\n";
 }
 
-void sample_utils::printTapDetectionSamples(const Samples& samples)
+void sample_utils::printTapGestureSamples(const Samples& samples)
 {
-    std::cout << "TapDetection {\n";
-    for (const auto& sample : samples.taps)
+    std::cout << "Tap Gestures {\n";
+    for (const auto& gesture : samples.tapGestures)
     {
         std::cout 
-            << " @" << sample.timestamp 
-            << " Count(" << (int) sample.count 
+            << " @" << gesture.timestamp 
+            << " Count(" << (int) gesture.count 
             << ")\n";
     }
     std::cout << "}\n";
 }
 
+void sample_utils::printShakeGestureSamples(const Samples& samples)
+{
+    std::cout << "Shake Gestures {\n";
+    for (const auto& gesture : samples.shakeGestures)
+    {
+        std::cout 
+            << " @" << gesture.timestamp 
+            << " Duration(" << (int) gesture.duration 
+            << ")\n";
+    }
+    std::cout << "}\n";
+}

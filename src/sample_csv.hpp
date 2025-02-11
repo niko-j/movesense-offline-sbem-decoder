@@ -12,5 +12,6 @@ namespace sample_csv
     std::ostream& writeECGSamplesCSV(const Samples& samples, std::ostream& out);
     std::ostream& writeTempSamplesCSV(const Samples& samples, std::ostream& out);
     std::ostream& writeActivitySamplesCSV(const Samples& samples, std::ostream& out);
-    std::ostream& writeTapDetectionSamplesCSV(const Samples& samples, std::ostream& out);
+    std::ostream& writeTapGestureSamplesCSV(const Samples& samples, std::ostream& out);
+    std::ostream& writeShakeGestureSamplesCSV(const Samples& samples, std::ostream& out);
 } // namespace sample_csv
