@@ -30,7 +30,8 @@ Measurements with `csv` command:
 - `rr` - R-to-R interval samples
 - `temp` - Temperature samples
 - `activity` - Actigraphy samples
-- `tap` - Tap detection samples / "bookmarks"
+- `tap` - Tap gestures / "bookmarks"
+- `shake` - Shake gestures
 
 Parse and show information about the file:
 
