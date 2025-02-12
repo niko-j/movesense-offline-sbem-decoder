@@ -1,6 +1,11 @@
 # SBEM Decode
 
-This utility parses and converts Offline mode data from SBEM files and is able to export the measurement samples in CSV format.
+This utility parses and converts offline mode data from SBEM files and is able to export the measurement samples in CSV format.
+
+## Related Projects
+
+- [Movesense Offline Tracking](https://github.com/niko-j/movesense-offline-tracking) project contains the offline tracking firmware.
+- [Movesense Offline Configurator](https://github.com/niko-j/movesense-offline-configurator) project contains tools for configuring the offline mode and downloading logs from the device.
 
 ## Compiling
 
