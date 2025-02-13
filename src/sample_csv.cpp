@@ -216,7 +216,7 @@ std::ostream& sample_csv::writeActivitySamplesCSV(const Samples& samples, std::o
     {
         out
             << samples.activity[i].timestamp << CSV_DELIMITER
-            << samples.activity[i].activity.toFloat() << std::endl;
+            << samples.activity[i].activity << std::endl;
     }
 
     return out;

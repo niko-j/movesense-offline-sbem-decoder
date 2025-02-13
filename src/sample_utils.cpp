@@ -117,7 +117,7 @@ void sample_utils::printActivitySamples(const Samples& samples)
     {
         std::cout 
             << " @" << sample.timestamp 
-            << " Value(" << sample.activity.toFloat() 
+            << " Value(" << sample.activity
             << ")\n";
     }
     std::cout << "}\n";

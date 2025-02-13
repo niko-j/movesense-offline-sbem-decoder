@@ -152,7 +152,7 @@ struct WB_ALIGN(4) OfflineTempData : ISbemSerialized
 struct WB_ALIGN(4) OfflineActivityData : ISbemSerialized
 {
 	WB_ALIGN(4) OfflineTimestamp timestamp;
-	WB_ALIGN(4) Q10_6 activity;
+	WB_ALIGN(2) uint16 activity;
 
 	virtual bool readFrom(const std::vector<char>&data, size_t offset);
 };
@@ -168,7 +168,7 @@ struct WB_ALIGN(4) TapGestureData : ISbemSerialized
 struct WB_ALIGN(4) ShakeGestureData : ISbemSerialized
 {
 	WB_ALIGN(4) GestureTimestamp timestamp;
-	WB_ALIGN(1) uint32 duration;
+	WB_ALIGN(4) uint32 duration;
 
 	virtual bool readFrom(const std::vector<char>&data, size_t offset);
 };
