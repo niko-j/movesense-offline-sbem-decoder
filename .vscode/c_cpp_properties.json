@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/src/**"
             ],
-            "defines": [],
+            "defines": [ "SBEM_IMPL" ],
             "cStandard": "c11",
             "cppStandard": "gnu++17",
             "compilerPath": "/usr/bin/gcc"

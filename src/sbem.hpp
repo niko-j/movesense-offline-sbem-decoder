@@ -271,15 +271,15 @@ SbemId SbemDescriptor::getId() const
 std::optional<std::string> SbemDescriptor::getName() const
 {
     auto str = std::string(bytes.begin(), bytes.end());
-    auto beg = str.find("<PTH>");
-    auto newline = str.find_last_of('\n');
-    auto null = str.find_last_of('\0');
-
+    size_t beg = str.find("<PTH>");
     if (beg != std::string::npos)
     {
+        size_t newline = str.find('\n', beg);
         if (newline != std::string::npos)
             return std::string(str.begin() + beg + 5, str.begin() + newline);
-        else if (null != std::string::npos)
+
+        size_t null = str.find('\0', beg);
+        if (null != std::string::npos)
             return std::string(str.begin() + beg + 5, str.begin() + null);
     }
 
@@ -289,48 +289,54 @@ std::optional<std::string> SbemDescriptor::getName() const
 std::optional<std::string> SbemDescriptor::getFormat() const
 {
     auto str = std::string(bytes.begin(), bytes.end());
-    auto beg = str.find("<FRM>");
-    auto end = str.find_last_of('\0');
-    if (beg != std::string::npos && end != std::string::npos)
-        return std::string(str.begin() + beg + 5, str.begin() + end);
+    size_t beg = str.find("<FRM>");
+    if (beg != std::string::npos)
+    {
+        size_t end = str.find('\0', beg);
+        if (end != std::string::npos)
+            return std::string(str.begin() + beg + 5, str.begin() + end);
+    }
     return std::optional<std::string>();
 }
 
 std::optional<std::vector<SbemId>> SbemDescriptor::getGroup() const
 {
     auto str = std::string(bytes.begin(), bytes.end());
-    auto beg = str.find("<GRP>");
-    auto end = str.find_last_of('\0');
-    if (beg != std::string::npos && end != std::string::npos)
+    size_t beg = str.find("<GRP>");
+    if (beg != std::string::npos)
     {
-        auto list = std::string(str.begin() + beg + 5, str.begin() + end);
-        std::vector<SbemId> ids = {};
-        while (!list.empty())
+        size_t end = str.find('\0', beg);
+        if (end != std::string::npos)
         {
-            size_t limit = list.find(',');
-            std::string sub = "";
+            auto list = std::string(str.begin() + beg + 5, str.begin() + end);
+            std::vector<SbemId> ids = {};
+            while (!list.empty())
+            {
+                size_t limit = list.find(',');
+                std::string sub = "";
 
-            if (limit != std::string::npos)
-            {
-                sub = list.substr(0, limit);
-                list = list.erase(0, limit + 1);
-            }
-            else
-            {
-                sub = list; list = "";
-            }
+                if (limit != std::string::npos)
+                {
+                    sub = list.substr(0, limit);
+                    list = list.erase(0, limit + 1);
+                }
+                else
+                {
+                    sub = list; list = "";
+                }
 
-            try
-            {
-                SbemId id = std::stoi(sub);
-                ids.push_back(id);
+                try
+                {
+                    SbemId id = std::stoi(sub);
+                    ids.push_back(id);
+                }
+                catch (const std::exception& e)
+                {
+                    return std::optional<std::vector<SbemId>>();
+                }
             }
-            catch (const std::exception& e)
-            {
-                return std::optional<std::vector<SbemId>>();
-            }
+            return ids;
         }
-        return ids;
     }
 
     return std::optional<std::vector<SbemId>>();
