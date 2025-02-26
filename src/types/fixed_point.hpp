@@ -30,7 +30,7 @@ struct FixedPoint : ISbemSerialized
             if (!readValue(data, offset + i, byte))
                 return false;
 
-            if ((i + 1) == bytes && Signed) // Last byte, treat as signed!
+            if (Signed && (i + 1) == bytes)
                 value |= (((int8_t)byte) << (i * 8));
             else
                 value |= (byte << (i * 8));
