@@ -2,7 +2,7 @@
 #include "wb_types.hpp"
 #include "../sbem/sbem.hpp"
 
-template<typename T, uint8_t Bits, uint8_t Q>
+template<typename T, bool Signed, uint8_t Bits, uint8_t Q>
 struct FixedPoint : ISbemSerialized
 {
     static_assert(Bits % 8 == 0 && "Number of bits has to be byte-aligned");
@@ -30,7 +30,7 @@ struct FixedPoint : ISbemSerialized
             if (!readValue(data, offset + i, byte))
                 return false;
 
-            if ((i + 1) == bytes) // Last byte, treat as signed!
+            if ((i + 1) == bytes && Signed) // Last byte, treat as signed!
                 value |= (((int8_t)byte) << (i * 8));
             else
                 value |= (byte << (i * 8));
@@ -40,6 +40,6 @@ struct FixedPoint : ISbemSerialized
     }
 };
 
-using Q16_8 = FixedPoint<int32_t, 24, 8>;
-using Q12_12 = FixedPoint<int32_t, 24, 12>;
-using Q10_6 = FixedPoint<int16_t, 16, 6>;
+using Q16_8 = FixedPoint<int32_t, true, 24, 8>;
+using Q12_12 = FixedPoint<int32_t, true, 24, 12>;
+using Q10_6 = FixedPoint<int16_t, true, 16, 6>;
