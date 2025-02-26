@@ -7,7 +7,7 @@
 #include <vector>
 
 constexpr uint8_t SBEM_ID_DESCRIPTOR = 0x00;
-constexpr uint8_t SBEM_ID_ESCAPE = 0xFF;
+constexpr uint8_t SBEM_ESCAPE_BYTE = 0xFF;
 
 using SbemId = uint16_t;
 using SbemSize = uint32_t;
@@ -197,7 +197,7 @@ std::optional<uint16_t> SbemDocument::readId()
     uint8_t buffer[2] = {};
     fileStream.read((char*)buffer, 1);
 
-    if (buffer[0] < SBEM_ID_ESCAPE)
+    if (buffer[0] < SBEM_ESCAPE_BYTE)
     {
         return static_cast<uint16_t>(buffer[0]);
     }
@@ -219,7 +219,7 @@ std::optional<uint32_t> SbemDocument::readLen()
     uint8_t buffer[4] = {};
     fileStream.read((char*)buffer, 1);
 
-    if (buffer[0] < SBEM_ID_ESCAPE)
+    if (buffer[0] < SBEM_ESCAPE_BYTE)
     {
         return static_cast<uint32_t>(buffer[0]);
     }
@@ -266,7 +266,7 @@ SbemId SbemDescriptor::getId() const
 {
     if (bytes.size() > 1)
         return *reinterpret_cast<const SbemId*>(bytes.data());
-    return (SbemId)SBEM_ID_ESCAPE;
+    return (SbemId)SBEM_ESCAPE_BYTE;
 }
 
 std::optional<std::string> SbemDescriptor::getName() const
