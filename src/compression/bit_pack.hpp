@@ -19,7 +19,7 @@ namespace bit_pack
         const uint8_t* buf = data.data();
         for (size_t i = 0; i < samples; i++)
         {
-            uint16_t value = 0;
+            T value = 0;
             uint32_t bitsRead = 0;
 
             while (bitsRead < N_BITS)
