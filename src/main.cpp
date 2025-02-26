@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
 
-#include "sample_utils.hpp"
-#include "sample_csv.hpp"
-#include "sbem_loader.hpp"
-#include "sbem_utils.hpp"
+#include "samples/sample_utils.hpp"
+#include "samples/sample_csv.hpp"
+#include "sbem/sbem_loader.hpp"
+#include "sbem/sbem_utils.hpp"
 
 constexpr const char* CMD_INFO = "info";
 constexpr const char* CMD_CSV = "csv";

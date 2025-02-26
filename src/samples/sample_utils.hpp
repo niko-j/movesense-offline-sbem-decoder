@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "sbem.hpp"
+#include "../sbem/sbem.hpp"
 #include "samples.hpp"
 
 namespace sample_utils
@@ -19,9 +19,9 @@ namespace sample_utils
     void printTapGestureSamples(const Samples& samples);
     void printShakeGestureSamples(const Samples& samples);
 
-    inline double calculateSampleInterval(OfflineTimestamp timestamp, size_t sampleCount, OfflineTimestamp next)
+    inline double calculateSampleInterval(Timestamp timestamp, size_t sampleCount, Timestamp next)
     {
-        OfflineTimestamp diff = next - timestamp;
+        Timestamp diff = next - timestamp;
         double msPerSample = diff / (double) sampleCount;
         return msPerSample;
     }

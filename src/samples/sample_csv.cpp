@@ -143,10 +143,9 @@ std::ostream& sample_csv::writeRRSamplesCSV(const Samples& samples, std::ostream
     // Data rows
     for (size_t i = 0; i < samples.rr.size(); i++)
     {
-        auto values = samples.rr[i].unpack();
-        for (size_t j = 0; j < values.size(); j++)
+        for (size_t j = 0; j < samples.rr[i].intervals.size(); j++)
         {
-            out << values[j] << std::endl;
+            out << samples.rr[i].intervals[j] << std::endl;
         }
     }
 
@@ -167,7 +166,7 @@ std::ostream& sample_csv::writeECGSamplesCSV(const Samples& samples, std::ostrea
         const auto& a = samples.ecg.at(0);
         const auto& b = samples.ecg.at(1);
 
-        double diff = sample_utils::calculateSampleInterval(a.timestamp, a.sampleData.size(), b.timestamp);
+        double diff = sample_utils::calculateSampleInterval(a.timestamp, a.samples.size(), b.timestamp);
         interval = static_cast<uint16_t>(round(diff));
         samplerate = sample_utils::calculateSampleRate(diff);
     }
@@ -176,9 +175,9 @@ std::ostream& sample_csv::writeECGSamplesCSV(const Samples& samples, std::ostrea
     for (size_t i = 0; i < samples.ecg.size(); i++)
     {
         const auto& entry = samples.ecg[i];
-        for (size_t j = 0; j < entry.sampleData.size(); j++)
+        for (size_t j = 0; j < entry.samples.size(); j++)
         {
-            const auto& meas = entry.sampleData[j];
+            const auto& meas = entry.samples[j];
             out
                 << entry.timestamp + interval * j << CSV_DELIMITER
                 << meas << std::endl;

@@ -1,6 +1,6 @@
 #include "samples.hpp"
 #include "sample_utils.hpp"
-#include "sbem_loader.hpp"
+#include "../sbem/sbem_loader.hpp"
 
 Samples::Samples(const SbemDocument& sbem)
 {
@@ -16,49 +16,49 @@ Samples::Samples(const SbemDocument& sbem)
 
         if (measurement.find("OfflineMeasAcc.") != std::string::npos)
         {
-            OfflineAccData data;
+            AccData data;
             if (chunk.tryRead(data))
                 acc.push_back(data);
         }
         else if (measurement.find("OfflineMeasGyro.") != std::string::npos)
         {
-            OfflineGyroData data;
+            GyroData data;
             if (chunk.tryRead(data))
                 gyro.push_back(data);
         }
         else if (measurement.find("OfflineMeasMagn.") != std::string::npos)
         {
-            OfflineMagnData data;
+            MagnData data;
             if (chunk.tryRead(data))
                 magn.push_back(data);
         }
         else if (measurement.find("OfflineMeasHR.") != std::string::npos)
         {
-            OfflineHRData data;
+            HRData data;
             if (chunk.tryRead(data))
                 hr.push_back(data);
         }
         else if (measurement.find("OfflineMeasRR.") != std::string::npos)
         {
-            OfflineRRData data;
+            RRData data;
             if (chunk.tryRead(data))
                 rr.push_back(data);
         }
         else if (measurement.find("OfflineMeasECG.") != std::string::npos)
         {
-            OfflineECGData data;
+            ECGData data;
             if (chunk.tryRead(data))
                 ecg.push_back(data);
         }
         else if (measurement.find("OfflineMeasECGCompressed.") != std::string::npos)
         {
-            OfflineECGCompressedData data;
+            ECGCompressedData<32> data;
             if (chunk.tryRead(data))
             {
                 if (!ecg.empty() && data.timestamp == ecg.back().timestamp)
                 {
-                    for (const auto& s : data.sampleData)
-                        ecg.back().sampleData.push_back(s);
+                    for (const auto& s : data.samples)
+                        ecg.back().samples.push_back(s);
                 }
                 else
                 {
@@ -68,13 +68,13 @@ Samples::Samples(const SbemDocument& sbem)
         }
         else if (measurement.find("OfflineMeasTemp.") != std::string::npos)
         {
-            OfflineTempData data;
+            TemperatureData data;
             if (chunk.tryRead(data))
                 temp.push_back(data);
         }
         else if (measurement.find("OfflineMeasActivity.") != std::string::npos)
         {
-            OfflineActivityData data;
+            ActivityData data;
             if (chunk.tryRead(data))
                 activity.push_back(data);
         }

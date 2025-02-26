@@ -14,12 +14,16 @@ executable:
 	g++ -o $(BUILD_DIR)/$(TARGET) \
 		$(CXXFLAGS) \
 		-I./src \
-		./src/offline_measurements.cpp \
-		./src/samples.cpp \
-		./src/sample_utils.cpp \
-		./src/sample_csv.cpp \
-		./src/sbem_loader.cpp \
-		./src/sbem_utils.cpp \
+		./src/types/activity.cpp \
+		./src/types/ecg.cpp \
+		./src/types/gesture.cpp \
+		./src/types/hr.cpp \
+		./src/types/temperature.cpp \
+		./src/samples/samples.cpp \
+		./src/samples/sample_utils.cpp \
+		./src/samples/sample_csv.cpp \
+		./src/sbem/sbem_loader.cpp \
+		./src/sbem/sbem_utils.cpp \
 		./src/main.cpp
 
 clean:

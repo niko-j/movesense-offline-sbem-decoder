@@ -14,6 +14,7 @@ using SbemSize = uint32_t;
 
 struct ISbemSerialized
 {
+    virtual SbemSize getSerializedSize() const = 0;
     virtual bool readFrom(const std::vector<char>& data, size_t offset) = 0;
 };
 

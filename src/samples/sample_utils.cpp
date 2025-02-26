@@ -62,9 +62,8 @@ void sample_utils::printRRSamples(const Samples& samples)
     std::cout << "R-to-R {\n";
     for (const auto& entries : samples.rr)
     {
-        auto values = entries.unpack();
         std::cout << " @" << entries.timestamp << " [ ";
-        for (const auto& rr : values)
+        for (const auto& rr : entries.intervals)
         {
             std::cout << rr << " ";
         }
@@ -80,15 +79,15 @@ void sample_utils::printECGSamples(const Samples& samples)
     {
         const auto& a = samples.ecg.at(0);
         const auto& b = samples.ecg.at(1);
-        double interval = calculateSampleInterval(a.timestamp, a.sampleData.size(), b.timestamp);
+        double interval = calculateSampleInterval(a.timestamp, a.samples.size(), b.timestamp);
         samplerate = calculateSampleRate(interval);
     }
 
     std::cout << "ECG SampleRate(" << samplerate << " Hz) {\n";
-    for (const auto& sample : samples.ecg)
+    for (const auto& data : samples.ecg)
     {
-        std::cout << " @" << sample.timestamp << " [ ";
-        for (const auto& v : sample.sampleData)
+        std::cout << " @" << data.timestamp << " [ ";
+        for (const auto& v : data.samples)
         {
             std::cout << v << " ";
         }
