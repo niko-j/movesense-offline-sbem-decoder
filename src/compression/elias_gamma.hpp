@@ -14,11 +14,11 @@ namespace elias_gamma
     }
 
     template<typename T>
-    inline size_t count_bits(const T& value)
+    inline size_t count_bits_unsigned(const T& value)
     {
         T a = std::abs(value);
         float l = a > 0 ? std::log2f(a) : 0.0f;
-        return 1 + (size_t)std::floor(l);
+        return (size_t)std::floor(l);
     }
 
     inline void write_bits(char* c, char bits, size_t offset, size_t count)
@@ -32,7 +32,7 @@ namespace elias_gamma
     inline size_t encode_value(const T& value, uint64_t& out)
     {
         out = (abs(value) << 1) + (value >= 0 ? 1 : 0);
-        int n = count_bits<T>(out) - 1;
+        int n = count_bits_unsigned<int64_t>(out) - 1;
         return n * 2 + 1;
     }
 
@@ -44,6 +44,7 @@ namespace elias_gamma
         size_t offset = bitOffset % 8;
         int read_bits = 0;
         size_t max_bits = sizeof(T) * 8;
+        int64_t temp = 0;
         valueOut = 0;
 
         while (pos < dataLen)
@@ -86,7 +87,7 @@ namespace elias_gamma
                     bool bit = (b >> i) & 0b1;
 
                     if (bit)
-                        valueOut += std::pow(2.0, read_bits);
+                        temp += std::pow(2.0, read_bits);
                 }
 
                 if (read_bits > 0)
@@ -97,10 +98,12 @@ namespace elias_gamma
                 else
                 {
 
-                    if (valueOut & 0b1)
-                        valueOut = (valueOut >> 1);
+                    if (temp & 0b1)
+                        temp = (temp >> 1);
                     else
-                        valueOut = (valueOut >> 1) * -1;
+                        temp = (temp >> 1) * -1;
+
+                    valueOut = (T)temp;
 
                     bitOffset += 2 * n + 1; // new offset for the next value
                     return true;

@@ -171,6 +171,8 @@ std::ostream& sample_csv::writeECGSamplesCSV(const Samples& samples, std::ostrea
         samplerate = sample_utils::calculateSampleRate(diff);
     }
 
+    constexpr float LSB_uV = 1.52588f;
+
     // Data rows
     for (size_t i = 0; i < samples.ecg.size(); i++)
     {
@@ -180,7 +182,7 @@ std::ostream& sample_csv::writeECGSamplesCSV(const Samples& samples, std::ostrea
             const auto& meas = entry.samples[j];
             out
                 << entry.timestamp + interval * j << CSV_DELIMITER
-                << meas << std::endl;
+                << (meas * LSB_uV) / 1000.0f << std::endl;
         }
     }
 

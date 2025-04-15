@@ -83,13 +83,15 @@ void sample_utils::printECGSamples(const Samples& samples)
         samplerate = calculateSampleRate(interval);
     }
 
+    constexpr float LSB_uV = 1.52588f;
+
     std::cout << "ECG SampleRate(" << samplerate << " Hz) {\n";
     for (const auto& data : samples.ecg)
     {
         std::cout << " @" << data.timestamp << " [ ";
         for (const auto& v : data.samples)
         {
-            std::cout << v << " ";
+            std::cout << (v * LSB_uV) / 1000.f << " ";
         }
         std::cout << "]\n";
     }
