@@ -1,7 +1,7 @@
 #pragma once
 #include "wb_types.hpp"
 #include "../sbem/sbem.hpp"
-#include "../compression/delta_compression.hpp"
+#include "../compression/ecg_decompression.hpp"
 
 struct ECGData : ISbemSerialized
 {
@@ -33,8 +33,8 @@ struct ECGCompressedData : ECGData
         readValue<Timestamp>(data, offset, timestamp);
         offset += sizeof(Timestamp);
 
-        DeltaCompression<int16, BlockSize> dc;
-        samples = dc.decompress_block(data.data() + offset);
+        ECGDecompressor<BlockSize, int16_t, int32_t> dc;
+        samples = dc.decompress_block((const uint8_t*) data.data() + offset);
         return true;
     }
 };
